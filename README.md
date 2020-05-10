@@ -23,7 +23,7 @@ with OC2RS register. Here are few examples:
 - OC2RS=0  - Duty 0% (LED off)
 - OC2RS=31 - Duty 51% 
 - OC2RS=62 - (=PR2) - Duty nearly 100% - 1clock tick
-- OC2RS=64 - (=PR2+1) - Duty 100%
+- OC2RS=63 - (=PR2+1) - Duty 100%
 
 More information is available on [PIC32 Output Compare data sheet - PDF][PIC32 Output Compare].
 
