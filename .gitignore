@@ -5,3 +5,7 @@
 build/
 dist/
 private/ 
+# these files are generated
+*.mk
+*.bash
+*.properties

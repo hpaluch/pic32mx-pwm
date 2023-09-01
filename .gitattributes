@@ -2,6 +2,7 @@
 
 # always use Unix LF
 .gitattributes eol=lf
+.gitignore eol=lf
 Makefile text eol=lf
 *.mk text eol=lf
 *.bash text eol=lf
