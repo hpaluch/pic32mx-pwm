@@ -5,6 +5,7 @@
 build/
 dist/
 private/ 
+.generated_files/
 # these files are generated
 *.mk
 *.bash

@@ -38,10 +38,9 @@ More information is available on [PIC32 Output Compare data sheet - PDF][PIC32 O
 
 ## Software requirements
 
-* [XC32 compiler][XC compilers] - tested version v2.30
-* [MPLAB X IDE][MPLAB X IDE] - tested version v5.25
-  - installed  [MPLAB Harmony Configurator 3 Plugin][Harmony] - tested
-    version 3.3.0.1
+* [XC32 compiler][XC compilers] - tested version v4.30
+* [MPLAB X IDE][MPLAB X IDE] - tested version v6.15
+  - pending upgrade of Harmony plugin
 
 [PIC32 Output Compare]: http://ww1.microchip.com/downloads/en/devicedoc/61111e.pdf
 [Harmony]: https://www.microchip.com/mplab/mplab-harmony
