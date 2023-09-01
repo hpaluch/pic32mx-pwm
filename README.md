@@ -41,7 +41,9 @@ More information is available on [PIC32 Output Compare data sheet - PDF][PIC32 O
 * [XC32 compiler][XC compilers] - tested version v4.30
 * [MPLAB X IDE][MPLAB X IDE] - tested version v6.15
   - code regenerated with MCC Harmony (was MHC Harmony 3)
-  - notable changes: both Timers have now set PR1-1 (!)
+  - notable changes: both Timers have now set PR1 less -1 (!)
+  - had to manually create (from other project) file `firmware/src/config/pic32mx_pwm/pic32mx_pwm.mhc/settings.yml` otherwise it was attempting to again and again import
+    and convert old MHC Harmony 3 project...
 
 [PIC32 Output Compare]: http://ww1.microchip.com/downloads/en/devicedoc/61111e.pdf
 [Harmony]: https://www.microchip.com/mplab/mplab-harmony
