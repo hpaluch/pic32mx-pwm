@@ -1,22 +1,24 @@
 /*******************************************************************************
-  Output Compare OCMP1 Peripheral Library (PLIB)
+  Device Header File
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    plib_ocmp1.c
+    device.h
 
   Summary:
-    OCMP1 Source File
+    This file includes the selected device from within the project.
+    The device will provide access to respective device packs.
 
   Description:
     None
 
 *******************************************************************************/
 
+// DOM-IGNORE-BEGIN
 /*******************************************************************************
-* Copyright (C) 2019 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -37,58 +39,13 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
-#include "plib_ocmp1.h"
-#include "interrupts.h"
+// DOM-IGNORE-END
 
-// *****************************************************************************
+#ifndef DEVICE_H
+#define DEVICE_H
 
-// *****************************************************************************
-// Section: OCMP1 Implementation
-// *****************************************************************************
-// *****************************************************************************
+#include <xc.h>
+#include <sys/attribs.h>
+#include "toolchain_specifics.h"
 
-// *****************************************************************************
-
-
-void OCMP1_Initialize (void)
-{
-    /*Setup OC1CON        */
-    /*OCM         = 6        */
-    /*OCTSEL       = 0        */
-    /*OC32         = 0        */
-    /*SIDL         = false    */
-
-    OC1CON = 0x6;
-
-    OC1R = 30;
-    OC1RS = 30;
-
-}
-
-void OCMP1_Enable (void)
-{
-    OC1CONSET = _OC1CON_ON_MASK;
-}
-
-void OCMP1_Disable (void)
-{
-    OC1CONCLR = _OC1CON_ON_MASK;
-}
-
-
-
-uint16_t OCMP1_CompareValueGet (void)
-{
-    return (uint16_t)OC1R;
-}
-
-void OCMP1_CompareSecondaryValueSet (uint16_t value)
-{
-    OC1RS = value;
-}
-
-uint16_t OCMP1_CompareSecondaryValueGet (void)
-{
-    return (uint16_t)OC1RS;
-}
-
+#endif //DEVICE_H

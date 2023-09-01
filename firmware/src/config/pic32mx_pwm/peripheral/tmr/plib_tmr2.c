@@ -51,9 +51,10 @@
 
 #include "device.h"
 #include "plib_tmr2.h"
+#include "interrupts.h"
 
 
-static TMR_TIMER_OBJECT tmr2Obj;
+volatile static TMR_TIMER_OBJECT tmr2Obj;
 
 
 void TMR2_Initialize(void)
@@ -73,7 +74,7 @@ void TMR2_Initialize(void)
     TMR2 = 0x0;
 
     /*Set period */
-    PR2 = 62U;
+    PR2 = 61U;
 
     /* Enable TMR Interrupt */
     IEC0SET = _IEC0_T2IE_MASK;
@@ -114,15 +115,16 @@ uint32_t TMR2_FrequencyGet(void)
 }
 
 
-void TIMER_2_InterruptHandler (void)
+void __attribute__((used)) TIMER_2_InterruptHandler (void)
 {
-    uint32_t status;
+    uint32_t status  = 0U;
     status = IFS0bits.T2IF;
     IFS0CLR = _IFS0_T2IF_MASK;
 
     if((tmr2Obj.callback_fn != NULL))
     {
-        tmr2Obj.callback_fn(status, tmr2Obj.context);
+        uintptr_t context = tmr2Obj.context;
+        tmr2Obj.callback_fn(status, context);
     }
 }
 

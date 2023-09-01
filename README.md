@@ -40,7 +40,8 @@ More information is available on [PIC32 Output Compare data sheet - PDF][PIC32 O
 
 * [XC32 compiler][XC compilers] - tested version v4.30
 * [MPLAB X IDE][MPLAB X IDE] - tested version v6.15
-  - pending upgrade of Harmony plugin
+  - code regenerated with MCC Harmony (was MHC Harmony 3)
+  - notable changes: both Timers have now set PR1-1 (!)
 
 [PIC32 Output Compare]: http://ww1.microchip.com/downloads/en/devicedoc/61111e.pdf
 [Harmony]: https://www.microchip.com/mplab/mplab-harmony

@@ -1,14 +1,14 @@
 /*******************************************************************************
- Debug Console Source file 
+ Debug Console Source file
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    debug_console.c
+    xc32_monitor.c
 
   Summary:
-    RSTC Source File
+    debug console Source File
 
   Description:
     None
@@ -37,13 +37,18 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
+#include <stddef.h>
+
+extern int read(int handle, void *buffer, unsigned int len);
+extern int write(int handle, void * buffer, size_t count);
 
 
-int _mon_getc(int canblock)
+int read(int handle, void *buffer, unsigned int len)
 {
-   return 0;
+   return -1;
 }
 
-void _mon_putc(char c)
+int write(int handle, void * buffer, size_t count)
 {
+   return -1;
 }
