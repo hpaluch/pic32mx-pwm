@@ -34,7 +34,15 @@ static volatile uint16_t temp_oc1rs;
 void TIMER1_EventHandler(uint32_t status, uintptr_t context)
 {
     /* Toggle custom LED on RA1, PIN3 */
-    //LATAbits.LATA1 ^= 1;
+    /* WARNING!
+     * Under traditional (ds)PIC24/33 you can use bit XOR: LATAbits.LATA1 ^= 2;
+     * It's compiled to single instruction 'btg' (bit toggle).
+     * But MIPS does not support atomic read-modify-write so we have
+     * to use hardware inversion write-only register with suffix 'INV'.
+     * In our example: LATAINV=2;
+     * There are also write-only registers for clear 'LATACLR' and set 'LATASET'
+     * In all 3 cases only 1-bits changes these registers (0-bits are no-op)
+     */
     GPIO_RA1_Toggle();
     
     temp_oc1rs = OC1RS + 5;
