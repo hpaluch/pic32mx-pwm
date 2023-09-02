@@ -15,9 +15,9 @@ Used peripherals:
 - on-chip oscillator 8MHz scaled down to 4MHz peripheral clock
 - TMR1 - 100ms interval, flashing external LED on PIN3 (for debug)
 - TMR2 - 1ms interval, PR2=61, clock source for PWM (OCMP1)
-- OCMP1 - PWM output to on-board LED D6
+- OCMP1 - PWM output to on-board LED D6 on Pin 2 (primary function RA0)
 
-NOTE: controlling PWM is easy. Its period is equal to source timer period
+Controlling PWM is easy. Its period is equal to source timer period
 (in our example TMR2 with period 62 => PR2=61 (-1). PWM duty is controlled
 with OC2RS register. Here are few examples:
 - OC2RS=0  - Duty 0% (LED off)
@@ -29,14 +29,16 @@ More information is available on [PIC32 Output Compare data sheet - PDF][PIC32 O
 
 > WARNING!
 >
-> Older datasheets for PIC24 clearly stated that `PRx1` registers
+> Older datasheets for PIC24 clearly stated that `PRx` registers
 > contain actually `PERIOD+1`, because they start counting from 0,
-> but Interrupt/reset is *after* reaching value in `PRx1`. However,
+> but Interrupt/Reset occurs *after* reaching value in `PRx` (period
+> compare registers *match* triggers on next clock edge). However,
 > for some weird reason this important information is missing
 > from PIC32 datasheets(!)
 > 
 > Compare this datasheet where is no useful information on period
-> and `PRx` register: [DS61105F][DS61105F]
+> and `PRx` register: [DS61105F][DS61105F] (they use careful wording
+> "TMR count register matches the PR period" without clear explanation)
 >
 > And look here: [DS70205D][DS70205D] on page 13 where the text is clear:
 >
@@ -48,8 +50,8 @@ More information is available on [PIC32 Output Compare data sheet - PDF][PIC32 O
 > > PR1 = 999;  // Load the period value
 > > ```
 >
-> This explain why MCC Harmony 5 now sets `PERIOD-1` to `PRx1`
-> registers while old MHC Harmony 3 just used `PERIOD` (which is
+> This explains why `MCC Harmony 5` now sets `PERIOD-1` to `PRx`
+> registers while old `MHC Harmony 3` just used `PERIOD` (which is
 > wrong)
 
 # Requirements
@@ -66,7 +68,8 @@ More information is available on [PIC32 Output Compare data sheet - PDF][PIC32 O
 * [XC32 compiler][XC compilers] - tested version v4.30
 * [MPLAB X IDE][MPLAB X IDE] - tested version v6.15
   - code regenerated with MCC Harmony (was MHC Harmony 3)
-  - notable changes: both Timers have now set PR1 less -1 (!)
+  - notable changes: both Timers have now set `PRx` less -1 (!) - see
+    above notes
   - had to manually create (from other project) file `firmware/src/config/pic32mx_pwm/pic32mx_pwm.mhc/settings.yml` otherwise it was attempting to again and again import
     and convert old MHC Harmony 3 project...
 
