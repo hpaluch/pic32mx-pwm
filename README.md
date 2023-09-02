@@ -42,6 +42,7 @@ More information is available on [PIC32 Output Compare data sheet - PDF][PIC32 O
 >
 > >  This code generates an interrupt after counting 1000 rising edges in
 > > the `T1CK` pin.
+> >
 > > ```
 > > ...
 > > PR1 = 999;  // Load the period value
@@ -69,6 +70,21 @@ More information is available on [PIC32 Output Compare data sheet - PDF][PIC32 O
   - had to manually create (from other project) file `firmware/src/config/pic32mx_pwm/pic32mx_pwm.mhc/settings.yml` otherwise it was attempting to again and again import
     and convert old MHC Harmony 3 project...
 
+# Notes
+
+PIC32MX is 32-bit `MIPS32 M4K` based CPU Core with peripherals from Microchip.
+Please see
+- datasheet: [PIC32MX250F128B][PIC32MX250F128B]
+- official splash page: https://www.microchip.com/en-us/products/microcontrollers-and-microprocessors/32-bit-mcus/pic32-32-bit-mcus/pic32mx
+- [MIPS32 M4K Manual][MIPS32 M4K Manual] from mips.com
+- [MIPS32 M4K Core Datasheet][MIPS32 M4K DTS] from mips.com
+- [MIPS32 Instruction Set][MIPS32 BIS] from mips.com
+- [MIPS32 Instruction Set Quick Reference][MIPS32 QRC] from mips.com
+
+[MIPS32 M4K DTS]: https://s3-eu-west-1.amazonaws.com/downloads-mips/documents/MD00247-2B-M4K-DTS-02.01.pdf
+[MIPS32 BIS]: https://s3-eu-west-1.amazonaws.com/downloads-mips/documents/MD00086-2B-MIPS32BIS-AFP-05.04.pdf
+[MIPS32 QRC]: https://s3-eu-west-1.amazonaws.com/downloads-mips/documents/MD00565-2B-MIPS32-QRC-01.01.pdf
+[MIPS32 M4K Manual]: https://s3-eu-west-1.amazonaws.com/downloads-mips/documents/MD00249-2B-M4K-SUM-02.03.pdf
 [DS70205D]: https://ww1.microchip.com/downloads/en/DeviceDoc/70205D.pdf
 [DS61105F]: http://ww1.microchip.com/downloads/en/devicedoc/61105f.pdf
 [PIC32 Output Compare]: http://ww1.microchip.com/downloads/en/devicedoc/61111e.pdf
