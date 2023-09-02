@@ -54,6 +54,12 @@ More information is available on [PIC32 Output Compare data sheet - PDF][PIC32 O
 > registers while old `MHC Harmony 3` just used `PERIOD` (which is
 > wrong)
 
+There is now After build hook generating assembler listing .lst file under:
+```
+firmware\pic32mx-pwm.X\dist\pic32mx_pwm\BUILD_TYPE\pic32mx-pwm.X.BUILD_TYPE.lst
+```
+Where `BUILD_TYPE` is `debug` or `production`.
+
 # Requirements
 
 ## Hardware requirements
