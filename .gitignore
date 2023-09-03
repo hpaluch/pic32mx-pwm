@@ -1,6 +1,9 @@
 *~
 *.swp
 *.bmp
+# PhotoScape
+*.db
+Originals/
 # MPLAB X IDE
 build/
 dist/

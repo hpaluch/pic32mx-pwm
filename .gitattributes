@@ -1,14 +1,10 @@
 # .gitattributes
-
 # always use Unix LF
 .gitattributes eol=lf
 .gitignore eol=lf
 Makefile text eol=lf
-*.mk text eol=lf
-*.bash text eol=lf
 *.c text eol=lf
 *.h text eol=lf
-
-# binary - do not touch
-*.PNG binary
-*.sch binary
+# GIT LFS:
+*.gif filter=lfs diff=lfs merge=lfs -text
+*.dwf3work filter=lfs diff=lfs merge=lfs -text

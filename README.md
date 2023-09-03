@@ -5,17 +5,32 @@ with PIC32MX.
 
 It does two things:
 
-1. control on-board LED D6 (on OC1, PIN2) brightness from 0% to 100% 
+1. control on-board `LED D6` (on `OC1`, `PIN2`) brightness from 0% to 100% 
    (and again starting from 0%) using PWM (OCMP1 peripheral)
 1. blinks external LED (on PIN3, RA1) with 200ms period - it works
    as primitive "watchdog" that everything is running. Note: this
    LED is not part of [Microstick II][PIC Microstick II]
 
 Used peripherals:
-- on-chip oscillator 8MHz scaled down to 4MHz peripheral clock
+- on-chip oscillator FRC 8MHz scaled down to 4MHz using `FRCDIV` by 2,
+  so `SYSCLK` and `PBCLK` is 4 Mhz - for easy probing using affordable
+  scope - in my case [Digilent AD2][Digilent AD2]
 - TMR1 - 100ms interval, flashing external LED on PIN3 (for debug)
 - TMR2 - 1ms interval, PR2=61, clock source for PWM (OCMP1)
-- OCMP1 - PWM output to on-board LED D6 on Pin 2 (primary function RA0)
+- OC1 - PWM output to on-board LED D6 on Pin 2 (primary function RA0)
+
+Use Pins on [Microstick II][PIC Microstick II]:
+
+| Pin | Signal | Note |
+| --- | --- | --- |
+| 1 | /MCLR | Reset + Programmer/Debugger |
+| 2 | OC1/RA0 | PWM - red LED |
+| 3 | RA1 | TMR1 - Debug LED |
+| 4 | PGED1 | Data for Programmer/Debugger |
+| 5 | PGEC1 | Clock for Programmer/Debugger |
+| 9 | RA2  | TMR2/PWM period Toggle |
+| 10 | CLKO/RA3 | PBCLK Output |
+
 
 Controlling PWM is easy. Its period is equal to source timer period
 (in our example TMR2 with period 62 => PR2=61 (-1). PWM duty is controlled
@@ -60,6 +75,21 @@ firmware\pic32mx-pwm.X\dist\pic32mx_pwm\BUILD_TYPE\pic32mx-pwm.X.BUILD_TYPE.lst
 ```
 Where `BUILD_TYPE` is `debug` or `production`.
 
+# Verification
+
+Here is system clock 4MHz measured on `PIN10` `CLKO`  with [Digilent AD2][Digilent AD2]
+using BNC probe with 10x attenuation:
+
+![CLKO 4 MHz](digilentad2/PIC32MX-PWM-CLKO.gif)
+
+And here is Workspace file for [Digilent WaveForms][Digilent WaveForms]  software:
+- [digilentad2/PIC32MX-PWM-CLKO.dwf3work](digilentad2/PIC32MX-PWM-CLKO.dwf3work)
+
+Please note that even 4 Mhz clock is quite high and its testing this 100 Mhz
+scope to its limits. It is main reason why I did not use 48 MHz system clock
+(which is now default in MCC Tool), because it is practically impossible to
+measure such clock without suitable Counter/Frequency meter.
+
 # Requirements
 
 ## Hardware requirements
@@ -102,3 +132,5 @@ Please see
 [MPLAB X IDE]: https://www.microchip.com/mplab/mplab-x-ide
 [PIC32MX250F128B]: https://www.microchip.com/wwwproducts/en/PIC32MX250F128B
 [PIC Microstick II]: https://www.microchip.com/DevelopmentTools/ProductDetails/dm330013-2
+[Digilent AD2]: https://digilent.com/shop/analog-discovery-2-100ms-s-usb-oscilloscope-logic-analyzer-and-variable-power-supply/
+[Digilent WaveForms]: https://digilent.com/shop/software/digilent-waveforms/
