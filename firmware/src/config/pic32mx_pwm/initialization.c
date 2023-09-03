@@ -63,12 +63,12 @@
 
 
 /*** DEVCFG1 ***/
-#pragma config FNOSC =      FRCPLL
+#pragma config FNOSC =      FRCDIV
 #pragma config FPBDIV =     DIV_1
 #pragma config FSOSCEN =    OFF
 #pragma config IESO =       OFF
 #pragma config POSCMOD =    OFF
-#pragma config OSCIOFNC =   OFF
+#pragma config OSCIOFNC =   ON
 #pragma config FCKSM =      CSDCMD
 #pragma config WDTPS =      PS1048576
 #pragma config FWDTEN =     OFF

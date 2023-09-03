@@ -55,6 +55,8 @@ void TIMER1_EventHandler(uint32_t status, uintptr_t context)
 
 void TIMER2_EventHandler(uint32_t status, uintptr_t context)
 {
+    // Toggle PIN9 RA2 on PWM Period interrupt.
+    GPIO_RA2_Toggle();
 }
 
 // *****************************************************************************
