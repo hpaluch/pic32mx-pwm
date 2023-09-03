@@ -9,6 +9,8 @@ build/
 dist/
 private/ 
 .generated_files/
+*.log
+*.inx
 # these files are generated
 *.mk
 *.bash

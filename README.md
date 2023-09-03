@@ -3,23 +3,47 @@
 Introductory project for [Microstick II][PIC Microstick II] 
 with PIC32MX.
 
-It does two things:
+It glows on-board LED using PWM.
 
-1. control on-board `LED D6` (on `OC1`, `PIN2`) brightness from 0% to 100% 
-   (and again starting from 0%) using PWM (OCMP1 peripheral)
-1. blinks external LED (on PIN3, RA1) with 200ms period - it works
-   as primitive "watchdog" that everything is running. Note: this
-   LED is not part of [Microstick II][PIC Microstick II]
+Here is example output from [Digilent AD2][Digilent AD2] scope/analyzer:
+
+![PWM Example output](digilentad2/PIC32MX-PWM-TMR2-OC1-BUS.gif)
+
+There are these important signals:
+- Yellow Channel 1: Toggles on Timer1 interrupt where we change `OC1RS`, in our
+  example it changed from 15 to 20 (see decoded number on Bus)
+- Blue CHannel 2 is actual PWM output to on-board LED. You can see various measures on 
+  the measurements tab - PWM frequency is 1 kHz, and current duty (coresponding to OC1RS=15) is 27%
+- `TMR2_PER` (on digital output only) is whole PWM period (normally set to 61) and it defines
+   1 kHz PWM frequency (`PR1` timer register)
+
+
+And here is Workspace file for [Digilent WaveForms][Digilent WaveForms]  software:
+- [digilentad2/PIC32MX-PWM-TMR2-OC1-BUS.dwf3work](digilentad2/PIC32MX-PWM-TMR2-OC1-BUS.dwf3work)
+
 
 Used peripherals:
 - on-chip oscillator FRC 8MHz scaled down to 4MHz using `FRCDIV` by 2,
   so `SYSCLK` and `PBCLK` is 4 Mhz - for easy probing using affordable
   scope - in my case [Digilent AD2][Digilent AD2]
-- TMR1 - 100ms interval, flashing external LED on PIN3 (for debug)
+- TMR1 - 100ms interval, flashing external LED on PIN3 (for debug) and increasing
+  PWM duty (causing glowing effect on LED)
 - TMR2 - 1ms interval, PR2=61, clock source for PWM (OCMP1)
 - OC1 - PWM output to on-board LED D6 on Pin 2 (primary function RA0)
+- we also send current value of `OC1RS` register to "data bus" using RB7,8,9,14,14,15 GPIO pins
 
-Use Pins on [Microstick II][PIC Microstick II]:
+> WARNING!
+>
+> I intended to use PMP (Parallel Master Port) interface for this data-bus, but was really annoyed by
+> Chip errata, where PMP completely overtakes all Address Pins, even when they are configured
+> in GPIO mode in PTEN register(!)
+>
+> Other problem is that PMD0 and PMD1 (Data 0 and Data 1 bits) signals conflict with Programmer/Debugger
+> pins PGED1 and PGEC1.  Programming switch does not help, because alternative PGDx,PGCx pins are
+> on unsupported location (these alternate pins are used for USB signals by this chip and are not
+> available for Programmer/Debugger)
+
+Used Pins on [Microstick II][PIC Microstick II]:
 
 | Pin | Signal | Note |
 | --- | --- | --- |
@@ -30,7 +54,14 @@ Use Pins on [Microstick II][PIC Microstick II]:
 | 5 | PGEC1 | Clock for Programmer/Debugger |
 | 9 | RA2  | TMR2/PWM period Toggle |
 | 10 | CLKO/RA3 | PBCLK Output |
+| 16 | RB7 | DATA0 (output of `OC1RS`) |
+| 17 | RB8 | DATA1 |
+| 18 | RB9 | DATA2 |
+| 24 | RB13 | DATA3 |
+| 25 | RB14 | DATA4 |
+| 26 | RB15 | DATA5 |
 
+Pins 16 to 26 are useful to show real OC1RS value on scope/analyzer.
 
 Controlling PWM is easy. Its period is equal to source timer period
 (in our example TMR2 with period 62 => PR2=61 (-1). PWM duty is controlled
